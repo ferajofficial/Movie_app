@@ -1,4 +1,3 @@
-import 'package:movie/Screens/signup.dart';
 import 'package:movie/firebaseopt.dart';
 import 'package:movie/utils/import.dart';
 
@@ -13,7 +12,7 @@ class MyApp extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return MaterialApp(
+    return const MaterialApp(
       // theme: ThemeData(),
       home: Splash_Sc(),
     );

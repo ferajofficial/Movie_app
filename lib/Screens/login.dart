@@ -1,14 +1,15 @@
 import 'package:movie/utils/import.dart';
-import 'package:shared_preferences/shared_preferences.dart';
 
-class login extends StatefulWidget {
-  const login({super.key});
+class Login extends StatefulWidget {
+  const Login({super.key});
 
   @override
-  State<login> createState() => _loginState();
+  State<Login> createState() => _LoginState();
 }
 
-class _loginState extends State<login> {
+class _LoginState extends State<Login> {
+  ValueNotifier<bool> obsecureTxt = ValueNotifier<bool>(true);
+
   FocusNode emailFocusnode = FocusNode();
   FocusNode passwordFocusnode = FocusNode();
   FocusNode loginFocusnode = FocusNode();
@@ -88,17 +89,22 @@ class _loginState extends State<login> {
               TextFormField(
                 focusNode: passwordFocusnode,
                 controller: passwordController,
-                obscureText: true,
-                decoration: const InputDecoration(
-                  prefixIcon: Icon(
+                obscureText: obsecureTxt.value,
+                decoration: InputDecoration(
+                  prefixIcon: const Icon(
                     Icons.lock_person,
                   ),
-
-                  // prefix: Text(""),
+                  suffixIcon: GestureDetector(
+                    onTap: () {
+                      obsecureTxt.value = !obsecureTxt.value;
+                    },
+                    child: Icon(obsecureTxt.value
+                        ? Icons.visibility_off
+                        : Icons.visibility),
+                  ),
                   labelText: 'Password',
                   hintText: 'Password',
-
-                  border: OutlineInputBorder(),
+                  border: const OutlineInputBorder(),
                 ),
                 onFieldSubmitted: (value) {
                   FocusScope.of(context).requestFocus(loginFocusnode);
@@ -130,16 +136,18 @@ class _loginState extends State<login> {
                     });
                     var sharedSc = await SharedPreferences.getInstance();
                     sharedSc.setBool(Splash_ScState.keyLog, true);
+                    // ignore: use_build_context_synchronously
                     FirebaseAuthMethods(FirebaseAuth.instance).loginWithEmail(
                         email: emailController.text,
                         password: passwordController.text,
                         context: context);
 
                     if (_formKey.currentState!.validate()) {
-                      Navigator.push(
+                      // ignore: use_build_context_synchronously
+                      Navigator.pushReplacement(
                           context,
                           MaterialPageRoute(
-                              builder: (context) => MovieListScreen()));
+                              builder: (context) => const MovieListScreen()));
                     }
                   },
                   style: ElevatedButton.styleFrom(

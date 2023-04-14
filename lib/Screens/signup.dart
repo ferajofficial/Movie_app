@@ -1,5 +1,5 @@
 import 'package:movie/utils/import.dart';
-import 'package:shared_preferences/shared_preferences.dart';
+
 
 class SignUp extends StatefulWidget {
   const SignUp({Key? key}) : super(key: key);
@@ -24,11 +24,12 @@ class _SignUpState extends State<SignUp> {
     passwordController.dispose();
     super.dispose();
   }
-
+  bool isLoadingGoogle = false;
   bool isLoading = false;
   bool animate = false;
   @override
   void initState() {
+    super.initState();
     startAnimation();
   }
 
@@ -184,6 +185,7 @@ class _SignUpState extends State<SignUp> {
                         var sharedSc = await SharedPreferences.getInstance();
                         sharedSc.setBool(Splash_ScState.keyLog, true);
 
+                        // ignore: use_build_context_synchronously
                         FirebaseAuthMethods(FirebaseAuth.instance)
                             .signUpWithEmail(
                                 email: emailController.text,
@@ -191,10 +193,11 @@ class _SignUpState extends State<SignUp> {
                                 context: context);
 
                         if (_formKey.currentState!.validate()) {
+                          // ignore: use_build_context_synchronously
                           Navigator.pushReplacement(
                               context,
                               MaterialPageRoute(
-                                  builder: (context) => MovieListScreen()));
+                                  builder: (context) => const MovieListScreen()));
                         }
                       },
                       style: ElevatedButton.styleFrom(
@@ -215,9 +218,6 @@ class _SignUpState extends State<SignUp> {
                 SizedBox(
                   height: getDeviceHeight(10),
                 ),
-                // SizedBox(
-                //   height: getDeviceHeight(5),
-                // ),
                 GestureDetector(
                   onTap: () async {
                     if (isLoading) return;
@@ -228,12 +228,14 @@ class _SignUpState extends State<SignUp> {
                     setState(() {
                       isLoading = false;
                     });
+                    // ignore: use_build_context_synchronously
                     FirebaseAuthMethods(FirebaseAuth.instance)
                         .signInWithGoogle(context);
+                    // ignore: use_build_context_synchronously
                     Navigator.pushReplacement(
                         context,
                         MaterialPageRoute(
-                            builder: (context) => MovieListScreen()));
+                            builder: (context) => const MovieListScreen()));
                   },
                   child: AnimatedOpacity(
                     duration: const Duration(milliseconds: 2000),
@@ -245,7 +247,7 @@ class _SignUpState extends State<SignUp> {
                         borderRadius: BorderRadius.circular(5),
                         color: Colors.white,
                       ),
-                      child: isLoading
+                      child: isLoadingGoogle
                           ? const Center(
                               child: CircularProgressIndicator(
                                   color: kSecondaryColor),
@@ -280,16 +282,9 @@ class _SignUpState extends State<SignUp> {
                 ),
                 GestureDetector(
                   onTap: () {
-                    // if (isLoading) return;
-                    // setState(() {
-                    //   isLoading = true;
-                    // });
-                    // await Future.delayed(const Duration(seconds: 1));
-                    // setState(() {
-                    //   isLoading = false;
-                    // });
+
                     Navigator.push(context,
-                        MaterialPageRoute(builder: (context) => const login()));
+                        MaterialPageRoute(builder: (context) => const Login()));
                   },
                   child: AnimatedOpacity(
                     duration: const Duration(milliseconds: 2000),

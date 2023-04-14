@@ -1,122 +1,5 @@
-// import 'package:movie/utils/import.dart';
-// import 'package:shared_preferences/shared_preferences.dart';
-
-// class Movie {
-//   String title;
-//   String director;
-//   String poster;
-
-//   Movie({required this.title, required this.director, required this.poster});
-// }
-
-// class MovieListScreen extends StatefulWidget {
-//   const MovieListScreen({super.key});
-
-//   @override
-//   MovieListScreenState createState() => MovieListScreenState();
-// }
-
-// class MovieListScreenState extends State<MovieListScreen> {
-//   TextEditingController movieController = TextEditingController();
-//   TextEditingController directorController = TextEditingController();
-//   TextEditingController posterController = TextEditingController();
-
-//   final List<Movie> _movies = [];
-//   bool animate = false;
-//   void _showAddMovieDialog() async {
-//     await showDialog(
-//         context: context,
-//         builder: (BuildContext context) {
-//           return AlertDialog(
-//             backgroundColor: scBg,
-
-//             //clipBehavior: Clip.hardEdge,
-//             title: Text(
-//               'Add Movie',
-//               style: GoogleFonts.poppins(
-//                   textStyle: const TextStyle(
-//                       color: kSecondaryColor,
-//                       fontWeight: FontWeight.w500,
-//                       fontSize: 18)),
-//             ),
-//             content: Column(
-//               children: [
-//                 TextField(
-//                   onChanged: (value) {
-//                     movieController.text = value;
-//                   },
-//                   decoration:
-//                       const InputDecoration(labelText: 'Name of the Movie'),
-//                 ),
-//                 TextField(
-//                   onChanged: (value) {
-//                     directorController.text = value;
-//                   },
-//                   decoration: const InputDecoration(labelText: 'Director Name'),
-//                 ),
-//                 TextField(
-//                   onChanged: (value) {
-//                     posterController.text = value;
-//                   },
-//                   decoration: const InputDecoration(labelText: 'Poster URL'),
-//                 ),
-//               ],
-//             ),
-//             actions: [
-//               TextButton(
-//                 child: Text(
-//                   'Cancel',
-//                   style: GoogleFonts.poppins(
-//                       textStyle: const TextStyle(
-//                           color: kSecondaryColor,
-//                           fontWeight: FontWeight.w500,
-//                           fontSize: 18)),
-//                 ),
-//                 onPressed: () {
-//                   Navigator.pop(context);
-//                 },
-//               ),
-//               ElevatedButton(
-//                 style: ElevatedButton.styleFrom(
-//                     backgroundColor: kprimarylightColor),
-//                 child: Text(
-//                   'Submit',
-//                   style: GoogleFonts.poppins(
-//                       textStyle: const TextStyle(
-//                           color: kSecondaryColor,
-//                           fontWeight: FontWeight.w500,
-//                           fontSize: 18)),
-//                 ),
-//                 onPressed: () async {
-//                   SharedPreferences sp = await SharedPreferences.getInstance();
-
-//                   sp.setString('movie_title', movieController.text);
-//                   sp.setString('director_name', directorController.text);
-//                   sp.setString('poster_url', posterController.text);
-
-//                   // print("object");
-//                   // _movies.add(Movie(
-//                   //     title: movieController.text,
-//                   //     director: directorController.text,
-//                   //     poster: posterController.text));
-//                   setState(() {
-//                     _movies.add(Movie(
-//                         title: movieController.text,
-//                         director: directorController.text,
-//                         poster: posterController.text));
-//                   });
-//                   // ignore: use_build_context_synchronously
-//                   Navigator.pop(context);
-//                 },
-//               ),
-//             ],
-//           );
-//         });
-//   }
-
 import 'package:movie/utils/import.dart';
-import 'package:shared_preferences/shared_preferences.dart';
-import 'dart:convert'; // For converting between object and JSON representation
+// For converting between object and JSON representation
 
 class Movie {
   String movieName;
@@ -157,11 +40,13 @@ class Movie {
 }
 
 class MovieListScreen extends StatefulWidget {
+  const MovieListScreen({super.key});
+
   @override
-  _MovieListScreenState createState() => _MovieListScreenState();
+  MovieListScreenState createState() => MovieListScreenState();
 }
 
-class _MovieListScreenState extends State<MovieListScreen> {
+class MovieListScreenState extends State<MovieListScreen> {
   List<Movie> movies = [];
   TextEditingController movieNameController = TextEditingController();
   TextEditingController directorController = TextEditingController();
@@ -174,7 +59,6 @@ class _MovieListScreenState extends State<MovieListScreen> {
   }
 
   Future<void> _loadMovies() async {
-    print("loadmovie");
     SharedPreferences sp = await SharedPreferences.getInstance();
     List<String>? movieStrings = sp.getStringList('movies');
     if (movieStrings != null) {
@@ -187,7 +71,6 @@ class _MovieListScreenState extends State<MovieListScreen> {
   }
 
   Future<void> _saveMovies() async {
-    print("savemovie");
     SharedPreferences sp = await SharedPreferences.getInstance();
     List<String> movieStrings =
         movies.map((movies) => movies.toJson()).toList();
@@ -195,7 +78,6 @@ class _MovieListScreenState extends State<MovieListScreen> {
   }
 
   void _addMovie() {
-    print("addmovie");
     String movieName = movieNameController.text;
     String director = directorController.text;
     String poster = posterController.text;
@@ -205,7 +87,6 @@ class _MovieListScreenState extends State<MovieListScreen> {
             Movie(movieName: movieName, director: director, poster: poster));
         _saveMovies();
       });
-      
     }
   }
 
@@ -283,13 +164,7 @@ class _MovieListScreenState extends State<MovieListScreen> {
                   sp.setString('director_name', directorController.text);
                   sp.setString('poster_url', posterController.text);
 
-                  setState(() {
-                    movies.add(Movie(
-                        movieName: movieNameController.text,
-                        director: directorController.text,
-                        poster: posterController.text));
-                  });
-
+                  // ignore: use_build_context_synchronously
                   Navigator.pop(context);
                 },
               ),
@@ -325,11 +200,9 @@ class _MovieListScreenState extends State<MovieListScreen> {
       body: ListView.builder(
         itemCount: movies.length,
         itemBuilder: (context, index) {
-          //Movie movies = movies[index];
-          print("listview");
           return Padding(
-            padding: const EdgeInsets.only(
-                top: 5, left: 10, right: 10, bottom: 5),
+            padding:
+                const EdgeInsets.only(top: 5, left: 10, right: 10, bottom: 5),
             child: ListTile(
                 shape: const RoundedRectangleBorder(
                     borderRadius: BorderRadius.only(
@@ -339,20 +212,14 @@ class _MovieListScreenState extends State<MovieListScreen> {
                         bottomLeft: Radius.circular(10))),
                 tileColor: tileBg,
                 title: Text(
-                  //snapshot.data!.getString('movie_title').toString(),
-
                   movies[index].movieName,
-                  //isLogin(),
                   style: GoogleFonts.poppins(
                       textStyle: const TextStyle(
                           color: kSecondaryColor,
                           fontWeight: FontWeight.w500,
                           fontSize: 18)),
                 ),
-                subtitle: Text(
-                    //sp.getString('director_name').toString(),
-                    movies[index].director,
-                    // isLogin(),
+                subtitle: Text(movies[index].director,
                     style: GoogleFonts.poppins(
                         textStyle: const TextStyle(
                             color: kSecondaryColor,
@@ -361,10 +228,7 @@ class _MovieListScreenState extends State<MovieListScreen> {
                 leading: CircleAvatar(
                   radius: 30,
                   backgroundImage: NetworkImage(
-                    // movies.,
-                    //snapshot.data!.getString('poster_url').toString(),
                     movies[index].poster,
-                    //isLogin(),
                   ),
                 ),
                 trailing: IconButton(
@@ -395,13 +259,3 @@ class _MovieListScreenState extends State<MovieListScreen> {
     );
   }
 }
-  
-  // @override
-  // Widget build(BuildContext context) {
-  //   // TODO: implement build
-  //   throw UnimplementedError();
-  // }
-
-  // @override
-  // dynamic noSuchMethod(Invocation invocation) => super.noSuchMethod(invocation);
-

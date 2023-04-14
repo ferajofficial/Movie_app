@@ -1,8 +1,5 @@
 import 'dart:async';
-
-import 'package:movie/Screens/signup.dart';
 import 'package:movie/utils/import.dart';
-import 'package:shared_preferences/shared_preferences.dart';
 
 // ignore: camel_case_types
 class Splash_Sc extends StatefulWidget {
@@ -20,7 +17,6 @@ class Splash_ScState extends State<Splash_Sc> {
   void initState() {
     super.initState();
     startAnimation();
-    // goTo();
   }
 
   @override
@@ -33,13 +29,14 @@ class Splash_ScState extends State<Splash_Sc> {
           AnimatedPositioned(
             duration: const Duration(seconds: 2),
             top: 100,
-            left: animate ? 70 : -80,
+            left: animate ? 60 : -80,
             right: 10,
             child: AnimatedOpacity(
               duration: const Duration(seconds: 2),
               opacity: animate ? 1 : 0,
               child: const Text(
-                "Welcome to our app! \nWe hope it brings you joy",
+                "Lights, camera, action!\nLet your story unfold and\ncaptivate the world.",
+                //"Welcome to our app! \nWe hope it brings you joy",
                 style: TextStyle(
                     fontSize: 25,
                     fontWeight: FontWeight.w500,
@@ -88,26 +85,19 @@ class Splash_ScState extends State<Splash_Sc> {
     );
   }
 
-  // void goTo() async {
-  //   var sharedSc = await SharedPreferences.getInstance();
-  //   var isLoggedIn = sharedSc.getBool(keyLog);
-
-   
-  // }
-
   Future startAnimation() async {
     await Future.delayed(const Duration(milliseconds: 500));
     setState(() => animate = true);
     await Future.delayed(const Duration(milliseconds: 5000));
-     var sharedSc = await SharedPreferences.getInstance();
-      var isLoggedIn = sharedSc.getBool(keyLog);
-     if (isLoggedIn != null) {
+    var sharedSc = await SharedPreferences.getInstance();
+    var isLoggedIn = sharedSc.getBool(keyLog);
+    if (isLoggedIn != null) {
       if (isLoggedIn) {
         // ignore: use_build_context_synchronously
         Navigator.pushReplacement(
           context,
           MaterialPageRoute(
-            builder: (context) =>  MovieListScreen(),
+            builder: (context) => const MovieListScreen(),
           ),
         );
       } else {
@@ -115,7 +105,7 @@ class Splash_ScState extends State<Splash_Sc> {
         Navigator.pushReplacement(
           context,
           MaterialPageRoute(
-            builder: (context) => const login(),
+            builder: (context) => const Login(),
           ),
         );
       }
