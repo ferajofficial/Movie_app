@@ -1,16 +1,14 @@
-# movie
+- Created an aesthetic app that allows users to add, delete, and list movies they have watched. 
 
-A new Flutter project.
+- An infinite scrollable list of all movies created by the user.
 
-## Getting Started
+ - Added a form for adding movies. (Fields: Name, Director, and poster image) 
 
-This project is a starting point for a Flutter application.
+- There is a delete icon next to each list item so that you can remove it from the list.
 
-A few resources to get you started if this is your first Flutter project:
+- Shared preference local database should be used to store the data.
 
-- [Lab: Write your first Flutter app](https://docs.flutter.dev/get-started/codelab)
-- [Cookbook: Useful Flutter samples](https://docs.flutter.dev/cookbook)
+ - Added animations to navigation and saving actions.
 
-For help getting started with Flutter development, view the
-[online documentation](https://docs.flutter.dev/), which offers tutorials,
-samples, guidance on mobile development, and a full API reference.
+The interactive and responsive user interface was enabled only for logged-in users, using Google authentication using Firebase.
+
