@@ -136,10 +136,10 @@ class _loginState extends State<login> {
                         context: context);
 
                     if (_formKey.currentState!.validate()) {
-                      Navigator.pushReplacement(
+                      Navigator.push(
                           context,
                           MaterialPageRoute(
-                              builder: (context) => const MovieListScreen()));
+                              builder: (context) => MovieListScreen()));
                     }
                   },
                   style: ElevatedButton.styleFrom(

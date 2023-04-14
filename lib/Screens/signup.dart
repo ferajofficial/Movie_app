@@ -194,8 +194,7 @@ class _SignUpState extends State<SignUp> {
                           Navigator.pushReplacement(
                               context,
                               MaterialPageRoute(
-                                  builder: (context) =>
-                                      const MovieListScreen()));
+                                  builder: (context) => MovieListScreen()));
                         }
                       },
                       style: ElevatedButton.styleFrom(
@@ -234,7 +233,7 @@ class _SignUpState extends State<SignUp> {
                     Navigator.pushReplacement(
                         context,
                         MaterialPageRoute(
-                            builder: (context) => const MovieListScreen()));
+                            builder: (context) => MovieListScreen()));
                   },
                   child: AnimatedOpacity(
                     duration: const Duration(milliseconds: 2000),

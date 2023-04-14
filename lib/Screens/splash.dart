@@ -107,7 +107,7 @@ class Splash_ScState extends State<Splash_Sc> {
         Navigator.pushReplacement(
           context,
           MaterialPageRoute(
-            builder: (context) => const MovieListScreen(),
+            builder: (context) =>  MovieListScreen(),
           ),
         );
       } else {
