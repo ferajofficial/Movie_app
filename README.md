@@ -2,11 +2,11 @@
 
 - An infinite scrollable list of all movies created by the user.
 
- - Added a form for adding movies. (Fields: Name, Director, and poster image) 
+ - Implemented a form for adding movies. (Fields: Name, Director, and poster image) 
 
 - There is a delete icon next to each list item so that you can remove it from the list.
 
-- Shared preference local database should be used to store the data.
+- Shared preference local database is used to store the data.
 
  - Added animations to navigation and saving actions.
 
